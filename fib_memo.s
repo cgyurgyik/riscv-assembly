@@ -2,7 +2,7 @@
 #
 # fib_memo(n, arr, size)
 # n: nth fibonacci number.
-# arr: memory address of the array.
+# arr: memory address of the array. Assumes each element is size 4 (int).
 # size: size of the array.
 #
 # Limitations: Uses the Cornell RISC-V Interpreter which has limited instruction set, so some instructions are

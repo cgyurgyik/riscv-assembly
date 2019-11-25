@@ -37,6 +37,8 @@ addi a3, x0, 10 # hardcode x = 10.
  sw t0, 24(a0)
 
 jal ra, BIN_SEARCH
+FIN:
+jal ra, EXIT
 
 BIN_SEARCH:
 addi sp, sp, 8
@@ -80,14 +82,13 @@ RET:
 lw s0, 0(sp)
 lw ra, 4(sp)
 addi sp, sp, 8
-jal ra, EXIT
+jal ra, FIN
 
 INCORRECT_BOUNDS:
 addi a0, x0, -1
 lw s0, 0(sp)
 lw ra, 4(sp)
 addi sp, sp, 8
-jal ra, EXIT
+jal ra, FIN
 
 EXIT:
-

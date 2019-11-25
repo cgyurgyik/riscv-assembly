@@ -87,7 +87,7 @@ addi a0, x0, -1
 lw s0, 0(sp)
 lw ra, 4(sp)
 addi sp, sp, 8
-jalr x0, ra, 0
+jal ra, EXIT
 
 EXIT:
 

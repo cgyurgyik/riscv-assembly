@@ -7,14 +7,11 @@
 #          exchange_numbers(arr1, arr2, 3);
 #          // Result:
 #          arr1 = {2, 4, 8}, arr2 = {1, 3, 5}
-#
-# Limitations: Uses the Cornell RISC-V Interpreter which has limited instruction set, so some instructions are
-#              implemented using other instructions.
 
 # MAIN
 addi sp, sp, 10000
-# Store array values in contiguous memory at mem address 0x0:
-# {1, 3, 5}
+ # Store array values in contiguous memory at mem address 0x0:
+ # {1, 3, 5}
  addi a0, x0, 0
  addi t0, x0, 1
  sw t0, 0(a0) 
@@ -33,7 +30,7 @@ addi sp, sp, 10000
  addi t0, x1, 8
  sw t0, 8(a1)
 
-addi a2, x0, 3 # size = 3.
+addi a2, x0, 3  # size = 3.
 
 jal ra, EXCHANGE_NUMBERS
 jal ra, EXIT
@@ -42,8 +39,8 @@ EXCHANGE_NUMBERS:
 addi sp, sp, -4
 sw ra, 0(sp)
 
-add t2, a0, x0 # arr1 address
-add t3, a1, x0 # arr2 address
+add t2, a0, x0  # arr1 address
+add t3, a1, x0  # arr2 address
 
 addi t1, x0, 0 # i
 LOOP:

@@ -37,12 +37,17 @@ addi a3, x0, 40 # hardcode x = 40.
  sw t0, 24(a0)
 
 jal ra, BIN_SEARCH
-FOUND:
 jal ra, EXIT
 
 BIN_SEARCH:
 addi sp, sp, -4
 sw ra, 0(sp)
+
+bne t0, a3, NOT_FOUND # if (arr[mid] == x) return mid.
+add a0, x0, t2
+jalr x0, ra, 0
+
+NOT_FOUND:
 
 blt a2, a1, INCORRECT_BOUNDS # if (r < l) return -1.
 
@@ -64,24 +69,27 @@ END_LOOP:
 add t3, t3, a0 # pointer to arr[mid].
 lw t0, 0(t3)   # get value at arr[mid].
 
-bne t0, a3, SKIP_ONE # if (arr[mid] == x) return mid.
+bne t0, a3, NOT_EQ # if (arr[mid] == x) return mid.
 add a0, x0, t2
-beq x0, x0, FOUND
+jalr x0, ra, 0
 
-SKIP_ONE:
+NOT_EQ:
 
-bge a3, t0, SKIP_TWO # if (x > arr[mid]) return bin_search(arr, mid+1, r, x).
-
+bge a3, t0, GREATER_THAN # if (x > arr[mid]) return bin_search(arr, mid+1, r, x).
 addi a2, t2, -1 # r = mid - 1 # bin_search(arr, l, mid-1, x);
 jal ra, BIN_SEARCH
 
-SKIP_TWO:
+GREATER_THAN:
 addi a1, t2, 1 # l = mid + 1
 jal ra, BIN_SEARCH
 
+RET:
+lw ra, 0(sp)
+addi sp, sp, 4
+jalr x0, ra, 0
+
 INCORRECT_BOUNDS:
 addi a0, x0, -1
-RET:
 lw ra, 0(sp)
 addi sp, sp, 4
 jalr x0, ra, 0

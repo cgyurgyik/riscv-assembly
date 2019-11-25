@@ -14,8 +14,8 @@
 # Invalid -> Shared : Ld
 # Invalid -> Modified : St
 #
-# Acronyms: Load -> Ld, 
-#           Store -> St, 
+# Acronyms: Ld -> Load, 
+#           St -> Store, 
 #           LdMiss -> Load Miss (from another processor), 
 #           StMiss -> Store Miss (from another processor), 
 #           WB -> Writeback
@@ -32,7 +32,7 @@
 # 40: StMiss
 # 50: WB
 #
-# change_bit_state(int current_state, int transition)
+# change_MSI_state(int current_state, int transition)
 # Returns: the new state according to the MSI model.
 
 # MAIN

@@ -37,7 +37,7 @@ addi a3, x0, 40 # hardcode x = 40.
  sw t0, 24(a0)
 
 jal ra, BIN_SEARCH
-FIN:
+FOUND:
 jal ra, EXIT
 
 BIN_SEARCH:
@@ -66,15 +66,17 @@ lw t0, 0(t3)   # get value at arr[mid].
 
 bne t0, a3, SKIP_ONE # if (arr[mid] == x) return mid.
 add a0, x0, t2
-beq x0, x0, FIN
+beq x0, x0, FOUND
 
 SKIP_ONE:
-bge a3, t0, SKIP_TWO # if (arr[mid] > x) return bin_search(arr, l, mid-1, x).
-addi a2, t2, -1 # l = mid + 1
+
+bge a3, t0, SKIP_TWO # if (x > arr[mid]) return bin_search(arr, mid+1, r, x).
+
+addi a2, t2, -1 # r = mid - 1 # bin_search(arr, l, mid-1, x);
 jal ra, BIN_SEARCH
 
 SKIP_TWO:
-addi a1, t2, 1 # r = mid - 1
+addi a1, t2, 1 # l = mid + 1
 jal ra, BIN_SEARCH
 
 INCORRECT_BOUNDS:

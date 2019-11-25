@@ -43,7 +43,6 @@ jal ra, EXIT
 BIN_SEARCH:
 addi sp, sp, 8
 sw ra, 4(sp)
-sw s0, 0(sp)
 
 blt a2, a1, INCORRECT_BOUNDS # if (r < l) return -1.
 
@@ -52,18 +51,18 @@ srai t1, t0, 1 # store (r-l)/2.
 add t2, t1, a1 # store l + (r-l)/2.
 
 # Get the 'mid' element in 'arr'.
-addi s0, x0, 0 # clear s0.
+addi t3, x0, 0 # clear t3.
 addi t0, x0, 0 # clear t0.
 
 LOOP:
 beq t0, t2, END_LOOP
 addi t0, t0, 1
-addi s0, s0, 4  # mid * sizeof(int)
+addi t3, t3, 4  # mid * sizeof(int)
 beq x0, x0, LOOP
 END_LOOP:
 
-add s0, s0, a0 # pointer to arr[mid].
-lw t0, 0(s0)   # get value at arr[mid].
+add t3, t3, a0 # pointer to arr[mid].
+lw t0, 0(t3)   # get value at arr[mid].
 
 bne t0, a3, SKIP_ONE # if (arr[mid] == x) return mid.
 add a0, x0, t2
@@ -78,15 +77,9 @@ SKIP_TWO:
 addi a1, t2, 1 # r = mid + 1
 jal ra, BIN_SEARCH
 
-RET: 
-lw s0, 0(sp)
-lw ra, 4(sp)
-addi sp, sp, 8
-jal ra, FIN
-
 INCORRECT_BOUNDS:
 addi a0, x0, -1
-lw s0, 0(sp)
+RET:
 lw ra, 4(sp)
 addi sp, sp, 8
 jal ra, FIN

@@ -31,7 +31,6 @@
 # 30: LdMiss
 # 40: StMiss
 # 50: WB
-# 60: INVALID_TRANSITION
 #
 # change_bit_state(int current_state, int transition)
 # Returns: the new state according to the MSI model.

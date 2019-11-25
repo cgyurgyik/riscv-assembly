@@ -32,7 +32,7 @@
 # 40: StMiss
 # 50: WB
 #
-# changeBitState(int current_state, int transition)
+# change_bit_state(int current_state, int transition)
 # Returns: the new state according to the MSI model.
 
 # MAIN

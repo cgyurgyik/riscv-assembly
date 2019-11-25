@@ -37,7 +37,6 @@ addi a3, x0, 10 # hardcode x = 10.
  sw t0, 24(a0)
 
 jal ra, BIN_SEARCH
-jal ra, EXIT
 
 BIN_SEARCH:
 addi sp, sp, 8

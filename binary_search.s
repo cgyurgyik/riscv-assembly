@@ -7,7 +7,7 @@
 # x: element being searched for.
 # 
 #
-# Requires: r >= l. Returns -1 otherwise.
+# Requires: r >= l. Returns -1 otherwise. 'arr' is in sequential order.
 #
 # Limitations: Uses the Cornell RISC-V Interpreter which has limited instruction set, so some instructions are
 #              implemented using other instructions (i.e. MUL).
@@ -15,9 +15,9 @@
 # MAIN
 addi sp, sp, 10000
 addi a0, x0, 0 # hardcode the memory address to begin at 0.
-addi a1, x0, 0 # hardcode l = 1.
-addi a2, x0, 4 # hardcore r = 6.
-addi a3, x0, 10 # hardcode x = 50.
+addi a1, x0, 0 # hardcode l = 0.
+addi a2, x0, 6 # hardcore r = 7.
+addi a3, x0, 40 # hardcode x = 40.
 
 # Store array values in contiguous memory:
 # {2, 3, 4, 10, 40, 50, 1000}
@@ -37,6 +37,7 @@ addi a3, x0, 10 # hardcode x = 50.
  sw t0, 24(a0)
 
 jal ra, BIN_SEARCH
+FIN:
 jal ra, EXIT
 
 BIN_SEARCH:
@@ -65,22 +66,23 @@ lw t0, 0(t3)   # get value at arr[mid].
 
 bne t0, a3, SKIP_ONE # if (arr[mid] == x) return mid.
 add a0, x0, t2
-beq x0, x0, RET
+beq x0, x0, FIN
 
 SKIP_ONE:
-blt t0, a3, SKIP_TWO # if (arr[mid] > x) return bin_search(arr, l, mid-1, x).
-addi a2, t2, -1 # l = mid - 1
+bge a3, t0, SKIP_TWO # if (arr[mid] > x) return bin_search(arr, l, mid-1, x).
+addi a2, t2, -1 # l = mid + 1
 jal ra, BIN_SEARCH
 
 SKIP_TWO:
-addi a1, t2, 1 # r = mid + 1
+addi a1, t2, 1 # r = mid - 1
 jal ra, BIN_SEARCH
 
-INCORRECT_BOUNDS:
-addi a0, x0, -1
 RET:
 lw ra, 0(sp)
 addi sp, sp, 4
 jalr x0, ra, 0
+
+INCORRECT_BOUNDS:
+addi a0, x0, -1
 
 EXIT:

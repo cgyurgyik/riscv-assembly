@@ -71,8 +71,6 @@ beq a1, t3, M_STORE_MISS
 beq a1, t4, M_WB
 
 M_LOAD:
-beq x0, x0, RET
-
 M_STORE:
 beq x0, x0, RET
 
@@ -101,21 +99,17 @@ beq a1, t2, S_LOAD_MISS
 beq a1, t3, S_STORE_MISS
 beq a1, t4, S_WB
 
-S_LOAD:
-beq x0, x0, RET
-
 S_STORE:
 addi a0, x0, 1
 beq x0, x0, RET
 
 S_LOAD_MISS:
+S_LOAD:
+S_WB:
 beq x0, x0, RET
 
 S_STORE_MISS:
 addi a0, x0, 3
-beq x0, x0, RET
-
-S_WB:
 beq x0, x0, RET
 
 INVALID:
@@ -140,11 +134,7 @@ addi a0, x0, 1
 beq x0, x0, RET
 
 I_LOAD_MISS:
-beq x0, x0, RET
-
 I_STORE_MISS:
-beq x0, x0, RET
-
 I_WB:
 beq x0, x0, RET
 

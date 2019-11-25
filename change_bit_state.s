@@ -43,11 +43,9 @@ addi a1, x0, 10 # Transition:    Load
 jal ra, CHANGE_BIT_STATE
 jal ra, EXIT
 
-
 CHANGE_BIT_STATE:
 addi sp, sp, -4
 sw ra, 0(sp)
-
 
 addi t1, x0, 1
 addi t2, x0, 2

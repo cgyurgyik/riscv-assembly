@@ -15,9 +15,9 @@
 # MAIN
 addi sp, sp, 10000
 addi a0, x0, 0 # hardcode the memory address to begin at 0.
-addi a1, x0, 0 # hardcode l = 0.
+addi a1, x0, 0 # hardcode l = 1.
 addi a2, x0, 4 # hardcore r = 6.
-addi a3, x0, 10 # hardcode x = 10.
+addi a3, x0, 10 # hardcode x = 50.
 
 # Store array values in contiguous memory:
 # {2, 3, 4, 10, 40, 50, 1000}
@@ -37,12 +37,11 @@ addi a3, x0, 10 # hardcode x = 10.
  sw t0, 24(a0)
 
 jal ra, BIN_SEARCH
-FIN:
 jal ra, EXIT
 
 BIN_SEARCH:
-addi sp, sp, 8
-sw ra, 4(sp)
+addi sp, sp, -4
+sw ra, 0(sp)
 
 blt a2, a1, INCORRECT_BOUNDS # if (r < l) return -1.
 
@@ -80,8 +79,8 @@ jal ra, BIN_SEARCH
 INCORRECT_BOUNDS:
 addi a0, x0, -1
 RET:
-lw ra, 4(sp)
-addi sp, sp, 8
-jal ra, FIN
+lw ra, 0(sp)
+addi sp, sp, 4
+jalr x0, ra, 0
 
 EXIT:

@@ -1,12 +1,12 @@
 # A function that implements the selection sort algorithm.
-# Time complexity:  O(n^2)
-# Space complexity: O(1)
+# Running time complexity:  O(n^2)
+# Running space complexity: O(1)
 #
 # selection_sort(int arr[], int size)
 # Requires: length(arr) == size
 #
 # Limitations: Uses the Cornell RISC-V Interpreter which has limited instruction set, so some instructions are
-#              implemented using other instructions.
+#              implemented using other instructions (i.e. MUL)
 
 # MAIN
 addi sp, sp, 10000

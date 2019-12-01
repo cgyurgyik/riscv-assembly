@@ -25,18 +25,10 @@ sw s1, 4(sp)
 sw s0, 0(sp)
 
 addi s0, a0, 0     # save n.
-addi s2, x0, 0     # clean slot for s2.
 
-# multiply n * 4 without using MUL.
-addi t0, x0, 0   
-LOOP:
-BEQ t0, s0, LOOP_DONE
-addi t0, t0, 1     # i = i + 1
-addi s2, s2, 4     # memory address = memory address + sizeof(int)
-BEQ x0, x0, LOOP
-LOOP_DONE:
+slli t0, s0, 2     # n * 4
 
-add s2, s2, a1     # arr[n]
+add s2, t0, a1     # arr[n]
 
 BLT a2, a0, SKIP   # if (size < n) skip. 
 

@@ -5,8 +5,7 @@
 # arr: memory address of the array. Assumes each element is size 4 (int).
 # size: size of the array.
 #
-# Limitations: Uses the Cornell RISC-V Interpreter which has limited instruction set, so some instructions are
-#              implemented using other instructions (i.e. MUL).
+# Limitations: Uses Cornell calling conventions and limited instruction set for RISC-V.
 
 
 # MAIN

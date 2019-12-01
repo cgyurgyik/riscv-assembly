@@ -9,8 +9,7 @@
 #
 # Requires: r >= l. Returns -1 otherwise. 'arr' is in sequential order.
 #
-# Limitations: Uses the Cornell RISC-V Interpreter which has limited instruction set, so some instructions are
-#              implemented using other instructions (i.e. MUL).
+# Limitations: Uses Cornell calling conventions and limited RISC-V instruction set.
 
 # MAIN
 addi sp, sp, 10000
@@ -56,16 +55,7 @@ srai t1, t0, 1 # store (r-l)/2.
 add t2, t1, a1 # store l + (r-l)/2.
 
 # Get the 'mid' element in 'arr'.
-addi t3, x0, 0 # clear t3.
-addi t0, x0, 0 # clear t0.
-
-LOOP:
-beq t0, t2, END_LOOP
-addi t0, t0, 1
-addi t3, t3, 4  # mid * sizeof(int)
-beq x0, x0, LOOP
-END_LOOP:
-
+slli t3, t2, 2 # mid * sizeof(int)
 add t3, t3, a0 # pointer to arr[mid].
 lw t0, 0(t3)   # get value at arr[mid].
 

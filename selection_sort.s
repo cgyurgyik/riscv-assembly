@@ -4,9 +4,6 @@
 #
 # selection_sort(int arr[], int size)
 # Requires: length(arr) == size
-#
-# Limitations: Uses the Cornell RISC-V Interpreter which has limited instruction set, so some instructions are
-#              implemented using other instructions (i.e. MUL)
 
 # MAIN
 addi sp, sp, 10000
@@ -58,31 +55,13 @@ addi t1, t0, 1   # j = i + 1
 SUBARRAY_LOOP:   
 beq t1, s0, END_SUBARRAY_LOOP # (while j < n)
 
-# BEGIN: Load arr[j] into t4
-addi t5, x0, 0       # k = 0
-addi t6, a0, 0       # Begin at memory address of 'arr'.
+slli t5, t1, 2  # j * sizeof(int)
+add t6, a0, t5
+lw t4, 0(t6)    # Load arr[j]   
 
-LOAD_ARR_J_LOOP:
-beq t5, t1, END_LOAD_ARR_J_LOOP # while (k < j)
-addi t6, t6, 4       # Add sizeof(int)
-addi t5, t5, 1       # k = k + 1
-beq x0, x0, LOAD_ARR_J_LOOP
-END_LOAD_ARR_J_LOOP:
-lw t4, 0(t6)
-# END: Load arr[j] into t4
-
-# BEGIN: Load arr[min_idx] into t3
-addi t5, x0, 0       # k = 0
-addi t6, a0, 0       # Begin at memory address of 'arr'.
-
-LOAD_ARR_MIN_IDX_LOOP:
-beq t5, t2, END_LOAD_ARR_MIN_IDX_LOOP # while (k < min_index)
-addi t6, t6, 4       # Add sizeof(int)
-addi t5, t5, 1       # k = k + 1
-beq x0, x0, LOAD_ARR_MIN_IDX_LOOP
-END_LOAD_ARR_MIN_IDX_LOOP:
-lw t3, 0(t6)
-# END: Load arr[min_idx] into t3
+slli t5, t2, 2  # min_index * sizeof(int)
+add t6, a0, t5  # arr[min_index]
+lw t3, 0(t6)    # Load arr[min_index] 
 
 blt t3, t4, MIN_REMAINS_SAME # if (arr[min_index] < arr[j]), don't change the min.
 addi t2, t1,0 # min_index = j
@@ -92,28 +71,13 @@ addi t1, t1, 1  # j = j + 1
 beq x0, x0, SUBARRAY_LOOP
 END_SUBARRAY_LOOP:
 
-# Begin swap.
-addi t5, x0, 0       # k = 0
-addi t6, a0, 0       # Begin at memory address of 'arr'.
+slli t5, t2, 2    # min_index * sizeof(int)
+add t6, a0, t5    # arr[min_index]
+lw t3, 0(t6)      # Load arr[min_index]  
 
-LOAD_SWAP_MIN_INDEX:
-beq t5, t2, END_LOAD_SWAP_MIN_INDEX # while (k < min_index)
-addi t6, t6, 4       # Add sizeof(int)
-addi t5, t5, 1       # k = k + 1
-beq x0, x0, LOAD_SWAP_MIN_INDEX
-END_LOAD_SWAP_MIN_INDEX:
-lw t3, 0(t6)
-
-addi a5, x0, 0       # k = 0
-addi a6, a0, 0       # Begin at memory address of 'arr'.
-
-LOAD_SWAP_ARR_MIN_IDX:
-beq a5, t0, END_LOAD_SWAP_ARR_MIN_IDX # while (k < i)
-addi a6, a6, 4       # Add sizeof(int)
-addi a5, a5, 1       # k = k + 1
-beq x0, x0, LOAD_SWAP_ARR_MIN_IDX
-END_LOAD_SWAP_ARR_MIN_IDX:
-lw t4, 0(a6)
+slli a6, t0, 2    # i * sizeof(int)
+add a6, a6, a0    # arr[i] 
+lw t4, 0(a6)      # Load arr[i]
 
 # Perform stores.
 sw t3, 0(a6)

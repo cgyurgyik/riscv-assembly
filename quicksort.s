@@ -77,11 +77,11 @@ sw ra, 0(sp)
 slli t0, a2, 2   # end * sizeof(int)
 add t0, t0, a0  
 lw t0, 0(t0)     # pivot = arr[end]
-addi t1, a1, -1  # i = (low - 1)
+addi t1, a1, -1  # i = (start - 1)
 
-addi t2, a1, 0   # j = low
+addi t2, a1, 0   # j = start
 LOOP:
-BEQ t2, a2, LOOP_DONE   # while (j < high)
+BEQ t2, a2, LOOP_DONE   # while (j < end)
 
 slli t3, t2, 2   # j * sizeof(int)
 add a6, t3, a0   # (arr + j)

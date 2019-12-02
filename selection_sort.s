@@ -75,12 +75,12 @@ slli t5, t2, 2    # min_index * sizeof(int)
 add t6, a0, t5    # arr[min_index]
 lw t3, 0(t6)      # Load arr[min_index]  
 
-slli a6, t0, 2    # i * sizeof(int)
-add a6, a6, a0    # arr[i] 
-lw t4, 0(a6)      # Load arr[i]
+slli t1, t0, 2    # i * sizeof(int)
+add t1, t1, a0    # arr[i] 
+lw t4, 0(t1)      # Load arr[i]
 
 # Perform stores.
-sw t3, 0(a6)
+sw t3, 0(t1)
 sw t4, 0(t6)
 
 # End swap.

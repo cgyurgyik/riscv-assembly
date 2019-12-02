@@ -53,12 +53,12 @@ addi s3, a0, 0   # pi
 addi a0, s0, 0
 addi a1, s1, 0
 addi a2, s3, -1
-jal ra, QUICKSORT  # QS(arr, start, pi - 1);
+jal ra, QUICKSORT  # quicksort(arr, start, pi - 1);
 
 addi a0, s0, 0
 addi a1, s3, 1
 addi a2, s2, 0
-jal ra, QUICKSORT  # QS(arr, pi + 1, end);
+jal ra, QUICKSORT  # quicksort(arr, pi + 1, end);
 
 START_GT_END:
 

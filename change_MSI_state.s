@@ -35,7 +35,27 @@
 # change_MSI_state(int current_state, int transition)
 # Returns: the new state according to the MSI model.
 
+addi gp, gp, 10000
+
 # MAIN
+addi t1, x0, 1    # Store gloal variable
+addi t2, x0, 2    # values of Modified, Shared, Invalid.
+addi t3, x0, 3    # i.e. 
+sw t1, 0(gp)      # MODIFIED = 1;
+sw t2, 4(gp)
+sw t3, 8(gp)
+
+addi t0, x0, 10   # Store global variable 
+addi t1, x0, 20   # values of Ld, St, LdMiss, StMiss, WB
+addi t2, x0, 30
+addi t3, x0, 40
+addi t4, x0, 50
+sw t0, -4(gp)
+sw t1, -8(gp)
+sw t2, -12(gp)
+sw t3, -16(gp)
+sw t4, -20(gp)
+
 addi sp, sp, 1000
 addi a0, x0, 3  # Current state: Invalid
 addi a1, x0, 10 # Transition:    Load
@@ -46,20 +66,20 @@ CHANGE_BIT_STATE:
 addi sp, sp, -4
 sw ra, 0(sp)
 
-addi t1, x0, 1
-addi t2, x0, 2
-addi t3, x0, 3 
+lw t1, 0(gp)
+lw t2, 4(gp)
+lw t3, 8(gp)
 
 beq a0, t1, MODIFIED
 beq a0, t2, SHARED
 beq a0, t3, INVALID
 
 MODIFIED:
-addi t0, x0, 10
-addi t1, x0, 20
-addi t2, x0, 30
-addi t3, x0, 40
-addi t4, x0, 50
+lw t0, -4(gp)
+lw t1, -8(gp)
+lw t2, -12(gp)
+lw t3, -16(gp)
+lw t4, -20(gp)
 
 beq a1, t0, M_LOAD
 beq a1, t1, M_STORE
@@ -84,11 +104,11 @@ addi a0, x0, 3
 beq x0, x0, RET
 
 SHARED:
-addi t0, x0, 10
-addi t1, x0, 20
-addi t2, x0, 30
-addi t3, x0, 40
-addi t4, x0, 50
+lw t0, -4(gp)
+lw t1, -8(gp)
+lw t2, -12(gp)
+lw t3, -16(gp)
+lw t4, -20(gp)
 
 beq a1, t0, S_LOAD
 beq a1, t1, S_STORE
@@ -110,11 +130,11 @@ addi a0, x0, 3
 beq x0, x0, RET
 
 INVALID:
-addi t0, x0, 10
-addi t1, x0, 20
-addi t2, x0, 30
-addi t3, x0, 40
-addi t4, x0, 50
+lw t0, -4(gp)
+lw t1, -8(gp)
+lw t2, -12(gp)
+lw t3, -16(gp)
+lw t4, -20(gp)
 
 beq a1, t0, I_LOAD
 beq a1, t1, I_STORE

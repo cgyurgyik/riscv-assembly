@@ -8,8 +8,6 @@
 # 
 #
 # Requires: r >= l. Returns -1 otherwise. 'arr' is in sequential order.
-#
-# Limitations: Uses Cornell calling conventions and limited RISC-V instruction set.
 
 # MAIN
 addi sp, sp, 10000

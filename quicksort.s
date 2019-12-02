@@ -9,24 +9,26 @@
 # MAIN
 addi sp, sp, 10000
 # Store array values in contiguous memory at mem address 0x0:
-# {1, 5, 3, 4, 13, 39}
+# {10, 80, 30, 90, 40, 50, 70}
  addi a0, x0, 0
 
- addi t0, x0, 1
+ addi t0, x0, 10
  sw t0, 0(a0) 
- addi t0, x0, 5
+ addi t0, x0, 80
  sw t0, 4(a0)
- addi t0, x0, 3
+ addi t0, x0, 30
  sw t0, 8(a0)
- addi t0, x0, 4
+ addi t0, x0, 90
  sw t0, 12(a0)
- addi t0, x0, 13
+ addi t0, x0, 40
  sw t0, 16(a0)
- addi t0, x0, 39
+ addi t0, x0, 50
  sw t0, 20(a0)
+ addi t0, x0, 70
+ sw t0, 24(a0)
 
 addi a1, x0, 0 # start
-addi a2, x0, 5 # end
+addi a2, x0, 6 # end
 
 jal ra, QUICKSORT
 jal ra, EXIT
@@ -66,7 +68,7 @@ lw s2, 8(sp)
 lw s3, 12(sp)
 lw ra, 16(sp)
 addi sp, sp, 20
-jalr ra, x0, 0
+jalr x0, ra, 0
 
 PARTITION:
 addi sp, sp, -4
@@ -79,26 +81,26 @@ addi t1, a1, -1  # i = (low - 1)
 
 addi t2, a1, 0   # j = low
 LOOP:
-BNE t2, a2, LOOP_DONE   # while (j < high)
+BEQ t2, a2, LOOP_DONE   # while (j < high)
 
 slli t3, t2, 2   # j * sizeof(int)
-addi a6, t3, a0  # (arr + j)
+add a6, t3, a0   # (arr + j)
 lw t3, 0(a6)     # arr[j]
 
 addi t0, t0, 1   # pivot + 1
-BLT t0, t3, CURR_ELEMENT_GT_PIVOT  # if (pivot < arr[j])
+BLT t0, t3, CURR_ELEMENT_GTE_PIVOT  # if (pivot <= arr[j])
 addi t1, t1, 1   # i++
 
 slli t5, t1, 2   # i * sizeof(int)
-addi a7, t5, a0  # (arr + i)
+add a7, t5, a0   # (arr + i)
 lw t5, 0(a7)     # arr[i]
 
 sw t5, 0(a6)
 sw t3, 0(a7)     # swap(&arr[i], &arr[j])
 
-CURR_ELEMENT_GT_PIVOT:
+CURR_ELEMENT_GTE_PIVOT:
 addi t2, t2, 1   # j++
-beq x0, x0, LOOP:
+beq x0, x0, LOOP
 LOOP_DONE:
 
 addi t5, t1, 1   # i + 1
@@ -118,6 +120,6 @@ addi a0, a5, 0   # return i + 1
 
 lw ra, 0(sp)
 addi sp, sp, 4
-jalr ra, x0, 0
+jalr x0, ra, 0
 
 EXIT:

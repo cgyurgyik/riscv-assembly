@@ -17,7 +17,7 @@
 | x18 - x27 | s2 - s11 | saved registers                    |
 | x28 - x31 | t3 - t6  | temporary registers                |
 
-## Supported Instructions
+## Supported Instruction Set
 | RISC-V Instructions | Code                            |
 |---------------------|---------------------------------|
 | Arithmetic          | AND, ANDI, OR, ORI, XOR, XORI   |

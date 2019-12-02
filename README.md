@@ -16,3 +16,15 @@
 | x12 - x17 | a2 - a7  | function arguments                 |
 | x18 - x27 | s2 - s11 | saved registers                    |
 | x28 - x31 | t3 - t6  | temporary registers                |
+
+## Supported Instructions
+| RISC-V Instructions | Code                            |
+|---------------------|---------------------------------|
+| Arithmetic          | AND, ANDI, OR, ORI, XOR, XORI   |
+| Logical             | AND, ANDI, OR, ORI, XOR, XORI   |
+| Sets                | SLT, SLTI, SLTU, SLTIU          |
+| Shifts              | SRA, SRAI, SRL, SRLI, SLL, SLLI |
+| Memory              | LW, SW, LB, SB                  |
+| PC                  | LUI, AUIPC                      |
+| Jumps               | JAL, JALR                       |
+| Branches            | BEQ, BNE, BLT, BGE, BLTU, BGEU  |

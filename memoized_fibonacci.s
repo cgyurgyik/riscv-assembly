@@ -4,9 +4,6 @@
 # n: nth fibonacci number.
 # arr: memory address of the array. Assumes each element is size 4 (int).
 # size: size of the array.
-#
-# Limitations: Uses Cornell calling conventions and limited instruction set for RISC-V.
-
 
 # MAIN
 addi sp, sp, 10000

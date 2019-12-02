@@ -34,6 +34,9 @@
 #
 # change_MSI_state(int current_state, int transition)
 # Returns: the new state according to the MSI model.
+# Requires: 
+#           'current_state': 1, 2, 3
+#           'transition':    10, 20, 30, 40, 50
 
 addi gp, gp, 10000
 
@@ -74,6 +77,8 @@ beq a0, t1, MODIFIED
 beq a0, t2, SHARED
 beq a0, t3, INVALID
 
+beq x0, x0, RET # Current state is not one of the three states.
+
 MODIFIED:
 lw t0, -4(gp)
 lw t1, -8(gp)
@@ -86,6 +91,7 @@ beq a1, t1, M_STORE
 beq a1, t2, M_LOAD_MISS
 beq a1, t3, M_STORE_MISS
 beq a1, t4, M_WB
+beq x0, x0, RET # transition is not one of the five transitions.
 
 M_LOAD:
 M_STORE:
@@ -115,6 +121,7 @@ beq a1, t1, S_STORE
 beq a1, t2, S_LOAD_MISS
 beq a1, t3, S_STORE_MISS
 beq a1, t4, S_WB
+beq x0, x0, RET # transition is not one of the five transitions.
 
 S_STORE:
 addi a0, x0, 1
@@ -141,6 +148,7 @@ beq a1, t1, I_STORE
 beq a1, t2, I_LOAD_MISS
 beq a1, t3, I_STORE_MISS
 beq a1, t4, I_WB
+beq x0, x0, RET # transition is not one of the five transitions.
 
 I_LOAD:
 addi a0, x0, 2

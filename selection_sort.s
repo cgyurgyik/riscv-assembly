@@ -64,7 +64,7 @@ add t6, a0, t5  # arr[min_index]
 lw t3, 0(t6)    # Load arr[min_index] 
 
 blt t3, t4, MIN_REMAINS_SAME # if (arr[min_index] < arr[j]), don't change the min.
-addi t2, t1,0 # min_index = j
+addi t2, t1,0   # min_index = j
 MIN_REMAINS_SAME:
 
 addi t1, t1, 1  # j = j + 1
@@ -79,11 +79,8 @@ slli t1, t0, 2    # i * sizeof(int)
 add t1, t1, a0    # arr[i] 
 lw t4, 0(t1)      # Load arr[i]
 
-# Perform stores.
 sw t3, 0(t1)
-sw t4, 0(t6)
-
-# End swap.
+sw t4, 0(t6)      # swap(&arr[min_index], &arr[i])
 
 addi t0, t0, 1   # i = i + 1
 beq x0, x0, UNSORTED_ARRAY_BOUNDARY_LOOP

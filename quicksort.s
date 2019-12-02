@@ -4,7 +4,7 @@
 #
 # quicksort(int arr[], int start, int end)
 # Requires: 'start' >= 0
-#           'end' <= length(arr)
+#           'end' < length(arr)
 
 # MAIN
 addi sp, sp, 10000
@@ -26,7 +26,7 @@ addi sp, sp, 10000
  sw t0, 20(a0)
 
 addi a1, x0, 0 # start
-addi a2, x0, 6 # end
+addi a2, x0, 5 # end
 
 jal ra, QUICKSORT
 jal ra, EXIT
@@ -44,7 +44,34 @@ addi s1, a1, 0
 addi s2, a2, 0
 BLT a2, a1, START_GT_END
 
-# Get partitioning index.
+jal ra, PARTITION
+
+addi s3, a0, 0   # pi
+
+addi a0, s0, 0
+addi a1, s1, 0
+addi a2, s3, -1
+jal ra, QUICKSORT  # QS(arr, start, pi - 1);
+
+addi a0, s0, 0
+addi a1, s3, 1
+addi a2, s2, 0
+jal ra, QUICKSORT  # QS(arr, pi + 1, end);
+
+START_GT_END:
+
+lw s0, 0(sp)
+lw s1, 4(sp)
+lw s2, 8(sp)
+lw s3, 12(sp)
+lw ra, 16(sp)
+addi sp, sp, 20
+jalr ra, x0, 0
+
+PARTITION:
+addi sp, sp, -4
+sw ra, 0(sp)
+
 slli t0, a2, 2   # end * sizeof(int)
 add t0, t0, a0  
 lw t0, 0(t0)     # pivot = arr[end]
@@ -75,6 +102,7 @@ beq x0, x0, LOOP:
 LOOP_DONE:
 
 addi t5, t1, 1   # i + 1
+addi a5, t5, 0   # Save for return value.
 slli t5, t5, 2   # (i + 1) * sizeof(int)
 add a7, t5, a0   # (arr + (i + 1))
 lw t5, 0(a7)     # arr[i + 1]
@@ -86,24 +114,10 @@ lw t3, 0(a6)     # arr[end]
 sw t5, 0(a6)
 sw t3, 0(a7)     # swap(&arr[i + 1], &arr[end])
 
-addi s3, t1, 1   # pi = i + 1
+addi a0, a5, 0   # return i + 1
 
-addi a2, s3, -1
-jal ra, QUICKSORT  # QS(arr, start, pi - 1);
-
-addi a0, s0, 0
-addi a1, s3, 1
-addi a2, s2, 0
-jal ra, QUICKSORT  # QS(arr, pi + 1, end);
-
-START_GT_END:
-
-lw s0, 0(sp)
-lw s1, 4(sp)
-lw s2, 8(sp)
-lw s3, 12(sp)
-lw ra, 16(sp)
-addi sp, sp, 20
+lw ra, 0(sp)
+addi sp, sp, 4
 jalr ra, x0, 0
 
 EXIT:

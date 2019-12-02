@@ -8,6 +8,8 @@
 # 
 #
 # Requires: r >= l. Returns -1 otherwise. 'arr' is in sequential order.
+#           l >= 0.
+#           r < length(arr).
 
 # MAIN
 addi sp, sp, 10000

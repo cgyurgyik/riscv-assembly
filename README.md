@@ -34,4 +34,6 @@
 | Jumps               | JAL, JALR                       |
 | Branches            | BEQ, BNE, BLT, BGE, BLTU, BGEU  |
 
+- Instruction specifications can be found in the [RISC-V Instruction Set Manual](https://riscv.org/specifications/).
+
 \* as of December 2019
